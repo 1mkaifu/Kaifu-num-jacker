@@ -10,7 +10,8 @@ app = Flask(__name__)
 # =======================
 API_NAME = "Number Info API"
 API_VERSION = "1.0.3"
-DEVELOPER = "@ig_banz"
+DEVELOPER = "@ig__kaifu"  # Instagram username
+TELEGRAM = "@ig_banz"     # Telegram username
 
 API_KEY = os.getenv("SPLEXXO_API_KEY", "JACKER")
 SPLEXXO_URL = "https://splexxo123-7saw.vercel.app/api/seller"
@@ -96,7 +97,8 @@ def about():
         "version": API_VERSION,
         "description": "This API fetches number-related info using Splexxo data source.",
         "developer": DEVELOPER,
-        "github": "https://github.com/" + DEVELOPER.replace("@", "")
+        "instagram": "https://instagram.com/" + DEVELOPER.replace("@", ""),
+        "telegram": "https://t.me/" + TELEGRAM.replace("@", "")
     })
 
 
@@ -108,8 +110,9 @@ def contact():
     return jsonify({
         "success": True,
         "developer": DEVELOPER,
+        "telegram": "https://t.me/" + TELEGRAM.replace("@", ""),
         "instagram": "https://instagram.com/" + DEVELOPER.replace("@", ""),
-        "support": "For issues, DM on Instagram"
+        "support": "For issues, DM on Telegram or Instagram"
     })
 
 
@@ -119,7 +122,6 @@ def contact():
 @app.route("/lookup", methods=["GET", "POST"])
 @require_api_key
 def lookup():
-
     number = (
         request.args.get("number")
         or request.form.get("number")
@@ -166,7 +168,7 @@ def lookup():
     return jsonify({
         "success": True,
         "searched_number": number,
-        "source": "@IG_BANZ",
+        "source": TELEGRAM,  # Telegram username as source
         "result_count": len(splexxo_data) if splexxo_data else 0,
         "data": splexxo_data,
         "developer": DEVELOPER
